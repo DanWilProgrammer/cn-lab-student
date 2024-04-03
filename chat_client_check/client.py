@@ -18,7 +18,7 @@ def username_login():
     try:
         username = input()
         sock.connect(HOST_PORT)
-        string_bytes = "Sockets are great!".encode("utf-8")
+        string_bytes = ("HELLO-FROM " + name + "\n").encode("utf-8")
         bytes_len = len(string_bytes)
         num_bytes_to_send = bytes_len
         while num_bytes_to_send > 0:
