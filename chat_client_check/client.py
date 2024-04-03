@@ -26,22 +26,28 @@ def username_login():
             # For example, the sending buffer may be full.
             # send returns the number of bytes that were sent.
             num_bytes_to_send -= sock.send(string_bytes[bytes_len-num_bytes_to_send:])
+
         data = sock.recv(4096)
         if not data:
             print("Socket is closed.")
         else:
             print(f"Read data from socket: {data}")
+        #Conditional statements in authentication requirements
         if data == "IN-USE\n":
             #RA2: The client must ask the user for a new username if the provided one is already in use, with an informative message.
             print("Username is already in use. Please try again with a unique username.")
             username_login()
         elif data == "BUSY\n":
             #RA3: The client must inform the user if the server is full and exit gracefully.
-            print("Server is busy (max number of clients on server). Please try again later.")
+            print("Cannot log in. The server is full!")
             username_login()
         elif data == "SUCCESS\n":
-            pass
-    except Exception as e:
-        pass
+            print("Successfully logged in as <username>!")
+            handle_chat() 
+    except OSError as msg:
+        print(msg)
     finally:
         sock.close()
+
+def handle_chat():
+    pass
